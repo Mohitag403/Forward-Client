@@ -20,17 +20,6 @@ async def Kanger(c: Client, m: Message):
     await asyncio.sleep(2)
     for i in range(len(Config.FORWARD_TO_CHAT_ID)):
         await m.edit(text=f"Checking `{Config.FORWARD_TO_CHAT_ID[i]}` ...")
-        await asyncio.sleep(2)
-        try:
-            ForwardToChat = await c.get_chat_member(chat_id=Config.FORWARD_TO_CHAT_ID[i], user_id=(await c.get_me()).id)
-            if not ForwardToChat.permissions.can_send_messages:
-                await m.edit(text=f"Sorry, you don't have permission to send messages in {ForwardToChat.title} !")
-                return 400
-            await m.edit(text=f"Successfully Linked with `{ForwardToChat.title}` !")
-            await asyncio.sleep(2)
-        except Exception as err:
-            await m.edit(text=f"Sorry, can't get **Forward To Chat**!\n\n**Error:** `{err}`")
-            return 400
     await asyncio.sleep(2)
     await m.edit(text="Trying to Forward Now ...")
     async for message in c.iter_history(chat_id=Config.FORWARD_FROM_CHAT_ID[0], reverse=True):
